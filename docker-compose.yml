@@ -1,0 +1,6 @@
+web:
+  build: ./customer_service/.
+  volumes:
+    - "./app:/src/app"
+  ports:
+    - "3030:8080"
