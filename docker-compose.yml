@@ -1,4 +1,10 @@
-web:
+product:
+  build: ./product_service/
+  volumes:
+    - "./product_service/:/src/app"
+  ports:
+    - "3002:8080"
+customer:
   build: ./customer_service/
   volumes:
     - "./customer_service/:/src/app"
