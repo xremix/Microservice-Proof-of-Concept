@@ -1,2 +1,1 @@
-docker-compose build --no-cache
-docker-compose up
+`sh run.sh`

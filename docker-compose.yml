@@ -1,12 +1,18 @@
-product:
-  build: ./product_service/
-  volumes:
-    - "./product_service/:/src/app"
-  ports:
-    - "3002:8080"
 customer:
   build: ./customer_service/
   volumes:
     - "./customer_service/:/src/app"
   ports:
     - "3001:8080"
+product:
+  build: ./product_service/
+  volumes:
+    - "./product_service/:/src/app"
+  ports:
+    - "3002:8080"
+transaction:
+  build: ./transaction_service/
+  volumes:
+    - "./transaction_service/:/src/app"
+  ports:
+    - "3003:8080"

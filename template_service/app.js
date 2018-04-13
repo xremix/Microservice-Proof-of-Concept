@@ -10,13 +10,13 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Hello product\n');
+  res.send('Hello template\n');
 });
-app.get('/products', (req, res) => {
-  res.send(data.products);
+app.get('/templates', (req, res) => {
+  res.send(data.templates);
 });
-app.get('/product/:id', (req, res) => {
-  var prod = data.productById(req.params.id);
+app.get('/template/:id', (req, res) => {
+  var prod = data.templateById(req.params.id);
   res.send(prod);
 });
 
