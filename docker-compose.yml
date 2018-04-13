@@ -16,3 +16,4 @@ transaction:
     - "./transaction_service/:/src/app"
   ports:
     - "3003:8080"
+  env_file: .env
