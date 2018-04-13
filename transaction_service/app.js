@@ -2,6 +2,7 @@
 
 const express = require('express');
 const data = require('./data');
+const auth = require('./shared/auth');
 const network = require('./network');
 
 // Constants
@@ -11,9 +12,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  auth.validateToken(req.query.token, function(authorized){if(!authorized){res.status(401).send({status: "wrong-token"});return; }
     res.send('Hello transaction\n');
-  });
 });
 app.get('/transactions', (req, res) => {
   auth.validateToken(req.query.token, function(authorized){if(!authorized){res.status(401).send({status: "wrong-token"});return; }
@@ -26,13 +25,14 @@ app.get('/transaction/:id', (req, res) => {
 });
 app.get('/overview', (req, res) => {
   auth.validateToken(req.query.token, function(authorized){if(!authorized){res.status(401).send({status: "wrong-token"});return; }
+    network.token = req.query.token;
     network.get("3001", "/customers", function(customers){
       network.get("3002", "/products", function(products){
         var merge = data.mergeTransActionsWithCustomers(data.getTransactions(), customers);
         merge = data.mergeTransActionsWithProducts(merge, products);
         res.send(merge);
-      });
-    });
+      }, function(){res.status(401).send({status: "error external servier"});});
+    }, function(){res.status(401).send({status: "error external servier"});});
   });
 });
 

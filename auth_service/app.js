@@ -9,6 +9,9 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 
+app.get('/', (req, res) => {
+    res.send("Hello Auth");
+});
 app.get('/checkauth/', (req, res) => {
 
   if(req.query.token == "df6bd192-a5f5-4250-817c-24a682d9143a"){
