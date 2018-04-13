@@ -1,5 +1,5 @@
 var request = require('request');
-var env = require('./env');
+var env = require('./shared/env');
 
 var get = function(port, url, callback) {
   request('http://'+env.get("HOSTIP")+':'+port+url, function (error, response, body) {

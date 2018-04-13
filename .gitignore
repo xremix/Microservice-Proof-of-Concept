@@ -1,3 +1,10 @@
+auth_service/shared/
+customer_service/shared/
+product_service/shared/
+transaction_service/shared/
+
+
+
 # Logs
 logs
 *.log
@@ -56,4 +63,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
