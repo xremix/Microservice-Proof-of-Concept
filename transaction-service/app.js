@@ -31,8 +31,8 @@ app.get('/overview', (req, res) => {
         var merge = data.mergeTransActionsWithCustomers(data.getTransactions(), customers);
         merge = data.mergeTransActionsWithProducts(merge, products);
         res.send(merge);
-      }, function(){res.status(401).send({status: "error external servier"});});
-    }, function(){res.status(401).send({status: "error external servier"});});
+      }, function(){res.status(503).send({status: "error external servier"});});
+    }, function(){res.status(503).send({status: "error external servier"});});
   });
 });
 

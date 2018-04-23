@@ -1,5 +1,5 @@
 var request = require('request');
-var env = require('./shared/env');
+var env = require('./env');
 
 var token = "";
 
