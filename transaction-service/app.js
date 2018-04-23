@@ -3,7 +3,7 @@
 const express = require('express');
 const data = require('./data');
 const auth = require('./shared/auth');
-const network = require('./network');
+const network = require('./shared/network');
 
 // Constants
 const PORT = 8080;
