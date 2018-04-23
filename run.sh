@@ -9,12 +9,12 @@ cp ./shared/* ./customer-service/shared/
 cp ./shared/* ./product-service/shared/
 cp ./shared/* ./transaction-service/shared/
 docker-compose build --no-cache
-docker-compose up &
-
-
 
 if [ "$1" == "elk" ]
   then
+    docker-compose up
     cd ./elk
+    docker-compose up
+  else
     docker-compose up
 fi
