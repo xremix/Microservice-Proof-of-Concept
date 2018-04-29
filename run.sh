@@ -1,18 +1,14 @@
 cd ./microservices
-mkdir ./auth-service/shared/
-mkdir ./customer-service/shared/
-mkdir ./product-service/shared/
-mkdir ./transaction-service/shared/
 
-cp ./shared/* ./auth-service/shared/
-cp ./shared/* ./customer-service/shared/
-cp ./shared/* ./product-service/shared/
-cp ./shared/* ./transaction-service/shared/
+cp -R ./shared/ ./auth-service/
+cp -R ./shared/ ./customer-service/
+cp -R ./shared/ ./product-service/
+cp -R ./shared/ ./transaction-service/
 docker-compose build --no-cache
 
 if [ "$1" == "elk" ]
   then
-    docker-compose up
+    docker-compose up &
     cd ./elk
     docker-compose up
   else
