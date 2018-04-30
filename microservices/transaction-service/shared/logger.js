@@ -4,35 +4,30 @@ var env = require('./env');
 var logstashPort = 5000;
 var logstashServer = env.get("HOSTIP");
 
-function sendDataTo(ip, port, sendData){
+function logToLogstash(ip, port, sendData){
+  console.log(sendData.message);
   var Logstash = require('logstash-client');
-  console.log(sendData);
   var logstash = new Logstash({
-    type: 'tcp', // udp, tcp, memory
+    type: 'tcp',
     host: logstashServer,
     port: logstashPort
   });
   logstash.send(sendData);
-  // var client = new net.Socket();
-  // client.connect(port, ip, function() {
-  //   console.log('[Logger] Connected');
-  //   client.write(sendData);
-  // });
-  //
-  // client.on('data', function(data) {
-  //   console.log('[Logger] received: ' + data);
-  //   client.destroy(); // kill client after server's response
-  // });
-  //
-  // client.on('close', function() {
-  //   console.log('[Logger] closed');
-  // });
 }
 
-module.exports.error  = function(logData){
-  sendDataTo(logstashServer, logstashPort, logData)
+module.exports.error  = function(message, correlationId){
+  logToLogstash(logstashServer, logstashPort, getLoggingObject("ERROR", message, correlationId))
 };
 
-module.exports.log  = function(logData){
-  sendDataTo(logstashServer, logstashPort, logData)
+module.exports.log  = function(message, correlationId){
+  logToLogstash(logstashServer, logstashPort, getLoggingObject("INFO", message, correlationId))
 };
+
+function getLoggingObject(logLevel, message, correlationId){
+  return {
+    message: `[${logLevel}] ${message}`,
+    correlationId: correlationId,
+    hostname: env.get("HOSTNAME"),
+    service: env.get("SERVICENAME")
+  }
+}

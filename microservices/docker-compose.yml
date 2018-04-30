@@ -1,28 +1,28 @@
 auth:
   build: ./auth-service/
-  # volumes:
-  #   - "auth-service/:/src/app"
   ports:
     - "3000:8080"
   env_file: .env
+  environment:
+    - SERVICENAME=auth-service
 customer:
   build: ./customer-service/
-  # volumes:
-  #   - "customer-service/:/src/app"
   ports:
     - "3001:8080"
   env_file: .env
+  environment:
+    - SERVICENAME=customer-service
 product:
   build: ./product-service/
-  # volumes:
-  #   - "product-service/:/src/app"
   ports:
     - "3002:8080"
   env_file: .env
+  environment:
+    - SERVICENAME=product-service
 transaction:
   build: ./transaction-service/
-  # volumes:
-  #   - "transaction-service/:/src/app"
   ports:
     - "3003:8080"
   env_file: .env
+  environment:
+    - SERVICENAME=transaction-service
