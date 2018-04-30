@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-var logger = require('./shared/logger');
+const logger = require('./shared/logger');
 
 // Constants
 const PORT = 8080;
@@ -15,15 +15,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  logger.log({service: 'auth', message: "Client authenticated. Generating GUID",requestid: 10001});
+  logger.log("Client authenticated. Generating GUID", -1);
   res.send("df6bd192-a5f5-4250-817c-24a682d9143a");
 });
 app.get('/checkauth/', (req, res) => {
   if(req.query.token == "df6bd192-a5f5-4250-817c-24a682d9143a"){
-    logger.log("token " + req.query.token + " valid", 10001);
+    logger.log("token " + req.query.token + " valid", -1);
     res.send({status: "success"});
   }else{
-    logger.log("token " + req.query.token + " not valid", 10001);
+    logger.log("token " + req.query.token + " not valid", -1);
     res.status(401).send({status: "wrong-token"});
   }
 });

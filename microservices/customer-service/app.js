@@ -3,6 +3,7 @@
 const express = require('express');
 const data = require('./data');
 const auth = require('./shared/auth');
+const logger = require('./shared/logger');
 
 // Constants
 const PORT = 8080;
@@ -26,4 +27,4 @@ app.get('/customer/:id', (req, res) => {
 });
 
 app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+logger.log(`Running on http://${HOST}:${PORT}`);
