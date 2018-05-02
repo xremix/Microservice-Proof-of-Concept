@@ -190,12 +190,25 @@
 				},
 				{
 					"name": "Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2dccc39b-b400-442c-8574-c9ab51f71d65",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.text());",
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:3000/auth",
+							"raw": "http://localhost:3000/auth?user=admin",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -203,6 +216,51 @@
 							"port": "3000",
 							"path": [
 								"auth"
+							],
+							"query": [
+								{
+									"key": "user",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth wrong user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2dccc39b-b400-442c-8574-c9ab51f71d65",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.text());",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/auth?user=peter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth"
+							],
+							"query": [
+								{
+									"key": "user",
+									"value": "peter"
+								}
 							]
 						}
 					},
@@ -215,7 +273,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:3000/checkauth/?token=df6bd192-a5f5-4250-817c-24a682d9143a",
+							"raw": "http://localhost:3000/checkauth/?token={{token}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -228,7 +286,7 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "df6bd192-a5f5-4250-817c-24a682d9143a"
+									"value": "{{token}}"
 								}
 							]
 						}
