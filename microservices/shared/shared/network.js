@@ -1,9 +1,9 @@
 const correlator = require('express-correlation-id');
-var request = require('request');
-var env = require('./env');
+const request = require('request');
+const env = require('./env');
 const logger = require('./logger');
+const auth = require('./auth');
 
-var token = "";
 var ip = env.get("HOSTIP");
 
 var get = function(port, url, callback, errorFunction) {
@@ -11,7 +11,7 @@ var get = function(port, url, callback, errorFunction) {
   !errorFunction && logger.warn("No Error function defined for " + url);
 
   var options = {
-    url: 'http://'+ip+':'+port+url+"?token="+token,
+    url: 'http://'+ip+':'+port+url+"?token="+auth.currentToken(),
     headers: {
       'x-correlation-id': correlator.getId()
     }
@@ -28,4 +28,3 @@ var get = function(port, url, callback, errorFunction) {
 };
 
 module.exports.get = get;
-module.exports.token = token;

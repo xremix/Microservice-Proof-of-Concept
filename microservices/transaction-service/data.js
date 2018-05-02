@@ -22,6 +22,7 @@ var transactions = [
   }
 ];
 function getTransactions(){
+  // Creates a copy of the data
   return JSON.parse(JSON.stringify(transactions));
 }
 
