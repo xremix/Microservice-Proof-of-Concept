@@ -28,9 +28,10 @@ app.get('/transaction/:id', (req, res) => {
     logger.log("/overview recieved customer data");
     network.get("3002", "/product/"+trans.productid, function(products){
       logger.log("/overview recieved product data");
-      var merge = data.mergeTransActionsWithCustomers([trans], customers);
-      merge = data.mergeTransActionsWithProducts(merge, products);
-      res.send(trans[0]);
+      var merge = data.mergeTransActionsWithCustomers([trans], [customers]);
+      merge = data.mergeTransActionsWithProducts(merge, [products]);
+      logger.log("Merged Data " + JSON.stringify(merge));
+      res.send(merge[0]);
     }, function(){res.status(503).send({status: "external server error"});});
   }, function(){res.status(503).send({status: "external server error"});});
 
