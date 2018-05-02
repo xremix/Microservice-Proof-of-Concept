@@ -1,7 +1,9 @@
 const correlator = require('express-correlation-id');
+const net = require('net');
+const env = require('./env');
+const Logstash = require('logstash-client');
 
-var net = require('net');
-var env = require('./env');
+
 var logstashPort = 5000;
 var logstashServer = env.get("HOSTIP");
 
@@ -9,7 +11,6 @@ function logToServices(ip, port, sendData){
   // Log to console
   console.log(sendData.message);
   // Log to Logstash
-  var Logstash = require('logstash-client');
   var logstash = new Logstash({
     type: 'tcp',
     host: logstashServer,

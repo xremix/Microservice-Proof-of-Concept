@@ -1,7 +1,8 @@
-var request = require('request');
-var domain = require('domain');
-var env = require('./env');
+const request = require('request');
+const domain = require('domain');
+const env = require('./env');
 const logger = require('./logger');
+const httpContext = require('express-cls-hooked');
 
 var validateToken = function(callback) {
   var url = 'http://'+env.get("HOSTIP")+':3000/checkauth?token=' + currentToken();
@@ -41,7 +42,6 @@ var middleware = function(req, res, next){
   });
 }
 
-var httpContext = require('express-cls-hooked');
 currentToken = function() {
   return httpContext.get('authtoken');
 };

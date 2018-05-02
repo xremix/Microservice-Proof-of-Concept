@@ -1,4 +1,5 @@
-var _ = require('lodash');
+const _ = require('lodash');
+const logger = require('./shared/logger');
 
 var customers = [
   {

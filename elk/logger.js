@@ -1,5 +1,5 @@
 
-var net = require('net');
+const net = require('net');
 var logstashPort = 5000;
 var logstashServer = 'localhost';
 
