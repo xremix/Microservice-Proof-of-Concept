@@ -187,6 +187,80 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/checkauth/?token=df6bd192-a5f5-4250-817c-24a682d9143a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checkauth",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "df6bd192-a5f5-4250-817c-24a682d9143a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Wrong Auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/checkauth/?token=df6bd192-a5f5-4250-817c-24a682d9143x",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checkauth",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "df6bd192-a5f5-4250-817c-24a682d9143x"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -297,37 +371,6 @@
 					"response": []
 				}
 			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "846756ee-9ee7-4bc1-b4c6-f5dd0bb8ee41",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "fd8cff04-9f45-4a22-a01a-ddb05b2cca57",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"id": "d1d11c70-de43-46f1-b1c6-07ac5f09e9e1",
-			"key": "token",
-			"value": "df6bd192-a5f5-4250-817c-24a682d9143a",
-			"type": "string",
-			"description": ""
 		}
 	]
 }
