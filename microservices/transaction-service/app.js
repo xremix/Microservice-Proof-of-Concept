@@ -18,7 +18,6 @@ auth.configure(app);
 
 
 app.get('/', (req, res) => {
-      console.log(auth.currentToken());
     res.send('Hello transaction\n');
 });
 app.get('/transactions', (req, res) => {

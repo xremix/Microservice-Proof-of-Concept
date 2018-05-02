@@ -5,8 +5,10 @@ var env = require('./env');
 var logstashPort = 5000;
 var logstashServer = env.get("HOSTIP");
 
-function logToLogstash(ip, port, sendData){
+function logToServices(ip, port, sendData){
+  // Log to console
   console.log(sendData.message);
+  // Log to Logstash
   var Logstash = require('logstash-client');
   var logstash = new Logstash({
     type: 'tcp',
@@ -17,15 +19,15 @@ function logToLogstash(ip, port, sendData){
 }
 
 module.exports.error  = function(message){
-  logToLogstash(logstashServer, logstashPort, getLoggingObject("ERROR", message, true))
+  logToServices(logstashServer, logstashPort, getLoggingObject("ERROR", message, true))
 };
 
 module.exports.warn  = function(message){
-  logToLogstash(logstashServer, logstashPort, getLoggingObject("WARNING", message))
+  logToServices(logstashServer, logstashPort, getLoggingObject("WARNING", message))
 };
 
 module.exports.log  = function(message){
-  logToLogstash(logstashServer, logstashPort, getLoggingObject("INFO", message))
+  logToServices(logstashServer, logstashPort, getLoggingObject("INFO", message))
 };
 
 function getLoggingObject(logLevel, message, stack){

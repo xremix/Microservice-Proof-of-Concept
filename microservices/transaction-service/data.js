@@ -1,17 +1,22 @@
 var _ = require('lodash');
+const logger = require('./shared/logger');
 
 var transactions = [
   {
+    id: 0,
     customerid: 1,
     productid: 1
   },
   {
+    id: 1,
     customerid: 1,
     productid: 2
   },{
+    id: 2,
     customerid: 2,
     productid: 1
   },{
+    id: 3,
     customerid: 3,
     productid: 3
   }
@@ -29,7 +34,7 @@ module.exports.mergeTransActionsWithCustomers = function(trans, customers){
   return _.map(trans, function(item) {
       item.customer = _.find(customers, { "id" : item.customerid });
       if(item.customer != null){delete item.customerid;}
-      console.log(item);
+      logger.log(item);
       return item;
   });
 };
