@@ -13,19 +13,17 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.use(correlator());
+auth.configure(app);
+
 app.get('/', (req, res) => {
     res.send('Hello template\n');
 });
 app.get('/templates', (req, res) => {
-  auth.validateToken(req.query.token, function(authorized){if(!authorized){res.status(401).send({status: "no-auth"});return; }
     res.send(data.templates);
-  });
 });
 app.get('/template/:id', (req, res) => {
-  auth.validateToken(req.query.token, function(authorized){if(!authorized){res.status(401).send({status: "no-auth"});return; }
     var prod = data.templateById(req.params.id);
     res.send(prod);
-  });
 });
 
 app.listen(PORT, HOST);

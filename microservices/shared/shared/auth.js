@@ -17,23 +17,25 @@ var validateToken = function(token, callback) {
   })
 };
 
-var middleware = function(req, res, next) {
-  var reqd = domain.create();
-  reqd.add(req);
-  reqd.add(res);
-  // reqd._req = req; // Add request object to custom property
-  reqd._currentToken = "yesir"; // Add request object to custom property
-  // TODO: hook error event on reqd (see docs)
+var httpContext = require('express-cls-hooked');
+currentToken = function() {
+  return httpContext.get('foo');
+};
 
-  console.log("middleware :)")
-  console.log("middleware :)")
-  console.log("middleware :)")
-  console.log("middleware :)")
-  console.log("middleware :)")
-  console.log("middleware :)")
-  console.log("middleware :)")
-  console.log("middleware :)")
-  next();
-}
-module.exports.validateToken = validateToken;
-module.exports.middleware = middleware;
+configure = function(app) {
+  app.use(httpContext.middleware);
+  app.use((req, res, next) => {
+    validateToken(req.query.token,
+      function(authorized){
+        if(authorized){
+          httpContext.set('foo', 'bar');
+          next();
+        }else{
+          res.status(401).send({status: "no-auth"});
+          return;
+        }
+      });
+    });
+  };
+  module.exports.currentToken = currentToken;
+  module.exports.configure = configure;

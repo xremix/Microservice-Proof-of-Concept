@@ -1,11 +1,11 @@
-./auth-service/shared/*
-./auth-service/package.json
-./customer-service/shared/*
-./customer-service/package.json
-./product-service/shared/*
-./product-service/package.json
-./transaction-service/shared/*
-./transaction-service/package.json
+microservices/auth-service/shared/*
+microservices/auth-service/package.json
+microservices/customer-service/shared/*
+microservices/customer-service/package.json
+microservices/product-service/shared/*
+microservices/product-service/package.json
+microservices/transaction-service/shared/*
+microservices/transaction-service/package.json
 
 
 

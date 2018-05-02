@@ -14,20 +14,15 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.use(correlator());
-app.use(auth.middleware());
+auth.configure(app);
+
+
 app.get('/', (req, res) => {
-  console.log(process.domain._currentToken);
-  console.log(process.domain._currentToken);
-  console.log(process.domain._currentToken);
-  console.log(process.domain._currentToken);
-  console.log(process.domain._currentToken);
-  console.log(process.domain._currentToken);
+      console.log(auth.currentToken());
     res.send('Hello transaction\n');
 });
 app.get('/transactions', (req, res) => {
-  auth.validateToken(req.query.token, function(authorized){if(!authorized){res.status(401).send({status: "no-auth"});return; }
     res.send(data.getTransactions());
-  });
 });
 app.get('/transaction/:id', (req, res) => {
   var prod = data.transactionById(req.params.id);
@@ -35,7 +30,6 @@ app.get('/transaction/:id', (req, res) => {
 });
 app.get('/overview', (req, res) => {
   logger.log("/overview");
-  auth.validateToken(req.query.token, function(authorized){if(!authorized){res.status(401).send({status: "no-auth"});return; }
     logger.log("/overview Token is valid");
     network.token = req.query.token;
     network.get("3001", "/customers", function(customers){
@@ -48,7 +42,6 @@ app.get('/overview', (req, res) => {
       }, function(){res.status(503).send({status: "external server error"});});
     }, function(){res.status(503).send({status: "external server error"});});
   });
-});
 
 
 app.listen(PORT, HOST);
