@@ -51,5 +51,6 @@ app.get('/overview', (req, res) => {
   }, function(){res.status(503).send({status: "external server error"});});
 });
 
+app.use(middleware.errorMiddleware);
 app.listen(PORT, HOST);
 logger.log(`Running on http://${HOST}:${PORT}`);

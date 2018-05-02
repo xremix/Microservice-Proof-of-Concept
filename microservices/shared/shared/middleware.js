@@ -60,14 +60,17 @@ configure = function(app, disableAuthenticationMiddleware) {
     res.set('X-Correlation-id', correlator.getId());
     next();
   });
-  // TODO verify this is working properly
-  // Catch all errors and send them to the logger
-  app.use(function(err, req, res, next) {
-    logger.error(err.message);
-    next();
-    // res.status(500).send(err);
-  });
 };
-module.exports.currentToken = currentToken;
-module.exports.currentUrl = currentUrl;
-module.exports.configure = configure;
+
+
+errorMiddleware = function(err, req, res, next) {
+  logger.error(err.toString());
+  next(err);
+}
+
+var exports = module.exports = {
+  currentToken: currentToken,
+  currentUrl: currentUrl,
+  configure: configure,
+  errorMiddleware: errorMiddleware
+}

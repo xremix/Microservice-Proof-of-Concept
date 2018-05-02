@@ -26,5 +26,6 @@ app.get('/template/:id', (req, res) => {
     res.send(prod);
 });
 
+app.use(middleware.errorMiddleware);
 app.listen(PORT, HOST);
 logger.log(`Running on http://${HOST}:${PORT}`);

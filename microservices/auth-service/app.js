@@ -43,5 +43,6 @@ app.get('/checkauth/', (req, res) => {
   });
 });
 
+app.use(middleware.errorMiddleware);
 app.listen(PORT, HOST);
 logger.log(`Running on http://${HOST}:${PORT}`);
