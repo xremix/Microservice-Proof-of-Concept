@@ -1,47 +1,57 @@
-const correlator = require('express-correlation-id');
 const net = require('net');
-const env = require('./env');
+const correlator = require('express-correlation-id');
 const Logstash = require('logstash-client');
+
+const env = require('./env');
+const auth = require('./auth');
 
 
 var logstashPort = 5000;
 var logstashServer = env.get("HOSTIP");
 
-function logToServices(ip, port, sendData){
+function logMessage(logObject){
   // Log to console
-  console.log(sendData.message);
+  logToConsole(logObject);
   // Log to Logstash
+  logToLogstash(logObject);
+}
+function logToConsole(logObject){
+  console.log(`[${logObject.microservice}] [${logObject.logLevel}] ${logObject.message}`);
+}
+function logToLogstash(logObject){
   var logstash = new Logstash({
     type: 'tcp',
     host: logstashServer,
     port: logstashPort
   });
-  logstash.send(sendData);
+  logstash.send(logObject);
 }
 
 module.exports.error  = function(message){
-  logToServices(logstashServer, logstashPort, getLoggingObject("ERROR", message, true))
+  logMessage(getLoggingObject("ERROR", message, true))
 };
 
 module.exports.warn  = function(message){
-  logToServices(logstashServer, logstashPort, getLoggingObject("WARNING", message))
+  logMessage(getLoggingObject("WARNING", message))
 };
 
 module.exports.log  = function(message){
-  logToServices(logstashServer, logstashPort, getLoggingObject("INFO", message))
+  logMessage(getLoggingObject("INFO", message))
 };
 
-function getLoggingObject(logLevel, message, stack){
+function getLoggingObject(logLevel, message){
 var service = env.get("SERVICENAME");
 var host = env.get("HOSTNAME");
   var ret = {
-    message: `[${host}] [${logLevel}] ${message}`,
+    logLevel: logLevel,
+    message: message,
     correlationId: correlator.getId(),
     hostname: host,
-    service: service
+    microservice: service,
+    url: auth.currentUrl
   }
-  if(stack){
-    ret.stack = new Error().stack
+  if(logLevel == "ERROR"){
+    ret.stackTrace = new Error().stack
   }
   return ret;
 }

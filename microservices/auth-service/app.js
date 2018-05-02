@@ -2,6 +2,7 @@
 
 const correlator = require('express-correlation-id');
 const express = require('express');
+const auth = require('./shared/auth');
 const logger = require('./shared/logger');
 
 // Constants
@@ -11,6 +12,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.use(correlator());
+auth.configure(app, true);
 
 app.get('/', (req, res) => {
     res.send("Hello Auth");
@@ -25,7 +27,7 @@ app.get('/checkauth/', (req, res) => {
     logger.log("token " + req.query.token + " valid");
     res.send({status: "success"});
   }else{
-    logger.log("token " + req.query.token + " not valid");
+    logger.error("token " + req.query.token + " not valid");
     res.status(401).send({status: "wrong-token"});
   }
 });
