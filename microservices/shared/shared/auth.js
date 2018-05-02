@@ -1,4 +1,5 @@
 var request = require('request');
+var domain = require('domain');
 var env = require('./env');
 
 var validateToken = function(token, callback) {

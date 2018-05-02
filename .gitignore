@@ -1,7 +1,11 @@
-auth_service/shared/
-customer_service/shared/
-product_service/shared/
-transaction_service/shared/
+./auth-service/shared/*
+./auth-service/package.json
+./customer-service/shared/*
+./customer-service/package.json
+./product-service/shared/*
+./product-service/package.json
+./transaction-service/shared/*
+./transaction-service/package.json
 
 
 
