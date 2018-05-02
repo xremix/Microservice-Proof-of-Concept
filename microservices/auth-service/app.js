@@ -23,12 +23,9 @@ app.get('/', (req, res) => {
 
 app.get('/auth', (req, res) => {
   logger.log("Client authenticated. Generating GUID");
-  res.send("df6bd192-a5f5-4250-817c-24a682d9143a");
-});
-app.get('/checkauth/', (req, res) => {
-  if(req.query.token == "df6bd192-a5f5-4250-817c-24a682d9143a"){
-    logger.log("token " + req.query.token + " valid");
-    res.send({status: "success"});
+  if(req.query.user == "admin"){
+    var token = jwt.sign({ username: 'johndoe' }, authSecret);
+    res.send(token);
   }else{
     logger.error("unknown user");
     res.status(401).send({status: "unknown user"});
