@@ -1,5 +1,8 @@
 cd ./microservices
 
+printf "HOSTIP=" > .env
+ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2  >> .env
+
 cp -R ./shared/ ./auth-service/
 cp -R ./shared/ ./customer-service/
 cp -R ./shared/ ./product-service/

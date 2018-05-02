@@ -1,5 +1,6 @@
 'use strict';
 
+const correlator = require('express-correlation-id');
 const express = require('express');
 const logger = require('./shared/logger');
 
@@ -16,15 +17,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  logger.log("Client authenticated. Generating GUID", req.correlationId());
+  logger.log("Client authenticated. Generating GUID");
   res.send("df6bd192-a5f5-4250-817c-24a682d9143a");
 });
 app.get('/checkauth/', (req, res) => {
   if(req.query.token == "df6bd192-a5f5-4250-817c-24a682d9143a"){
-    logger.log("token " + req.query.token + " valid", req.correlationId());
+    logger.log("token " + req.query.token + " valid");
     res.send({status: "success"});
   }else{
-    logger.log("token " + req.query.token + " not valid", req.correlationId());
+    logger.log("token " + req.query.token + " not valid");
     res.status(401).send({status: "wrong-token"});
   }
 });

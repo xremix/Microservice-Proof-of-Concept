@@ -15,4 +15,24 @@ var validateToken = function(token, callback) {
     }
   })
 };
+
+var middleware = function(req, res, next) {
+  var reqd = domain.create();
+  reqd.add(req);
+  reqd.add(res);
+  // reqd._req = req; // Add request object to custom property
+  reqd._currentToken = "yesir"; // Add request object to custom property
+  // TODO: hook error event on reqd (see docs)
+
+  console.log("middleware :)")
+  console.log("middleware :)")
+  console.log("middleware :)")
+  console.log("middleware :)")
+  console.log("middleware :)")
+  console.log("middleware :)")
+  console.log("middleware :)")
+  console.log("middleware :)")
+  next();
+}
 module.exports.validateToken = validateToken;
+module.exports.middleware = middleware;

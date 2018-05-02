@@ -14,6 +14,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
+COPY ../shared .
 
 EXPOSE 8080
 CMD [ "ls" ]

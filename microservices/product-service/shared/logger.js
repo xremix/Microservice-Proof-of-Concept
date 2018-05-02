@@ -1,3 +1,4 @@
+const correlator = require('express-correlation-id');
 
 var net = require('net');
 var env = require('./env');
@@ -15,19 +16,29 @@ function logToLogstash(ip, port, sendData){
   logstash.send(sendData);
 }
 
-module.exports.error  = function(message, correlationId){
-  logToLogstash(logstashServer, logstashPort, getLoggingObject("ERROR", message, correlationId))
+module.exports.error  = function(message){
+  logToLogstash(logstashServer, logstashPort, getLoggingObject("ERROR", message, true))
 };
 
-module.exports.log  = function(message, correlationId){
-  logToLogstash(logstashServer, logstashPort, getLoggingObject("INFO", message, correlationId))
+module.exports.warn  = function(message){
+  logToLogstash(logstashServer, logstashPort, getLoggingObject("WARNING", message))
 };
 
-function getLoggingObject(logLevel, message, correlationId){
-  return {
-    message: `[${logLevel}] ${message}`,
-    correlationId: correlationId,
-    hostname: env.get("HOSTNAME"),
-    service: env.get("SERVICENAME")
+module.exports.log  = function(message){
+  logToLogstash(logstashServer, logstashPort, getLoggingObject("INFO", message))
+};
+
+function getLoggingObject(logLevel, message, stack){
+var service = env.get("SERVICENAME");
+var host = env.get("HOSTNAME");
+  var ret = {
+    message: `[${host}] [${logLevel}] ${message}`,
+    correlationId: correlator.getId(),
+    hostname: host,
+    service: service
   }
+  if(stack){
+    ret.stack = new Error().stack
+  }
+  return ret;
 }
