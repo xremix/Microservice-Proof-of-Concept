@@ -25,9 +25,9 @@ app.get('/transactions', (req, res) => {
 app.get('/transaction/:id', (req, res) => {
   var trans = db.transactionById(req.params.id);
   network.get("3001", "/customer/"+trans.customerid, function(customers){
-    logger.log("/overview recieved customer data");
+    logger.log("/transaction recieved customer data");
     network.get("3002", "/product/"+trans.productid, function(products){
-      logger.log("/overview recieved product data");
+      logger.log("/transaction recieved product data");
       var merge = db.mergeTransActionsWithCustomers([trans], [customers]);
       merge = db.mergeTransActionsWithProducts(merge, [products]);
       logger.log("Merged Data " + JSON.stringify(merge));

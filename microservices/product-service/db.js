@@ -5,8 +5,9 @@ var products = require("./data");
 
 module.exports = {
   products: products,
-  productById: function(q) {
-    var items = _.filter(products, {'id':parseInt(q)});
+  productById: function(id) {
+    logger.log("Loading product " + id + " from database");
+    var items = _.filter(products, {'id':parseInt(id)});
     return items[0];
   }
 }

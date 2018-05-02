@@ -30,7 +30,6 @@ app.get('/customer/:id', (req, res) => {
     logger.log("Customer found with ID " +req.params.id);
     res.send(cus);
   }
-
 });
 
 app.listen(PORT, HOST);
