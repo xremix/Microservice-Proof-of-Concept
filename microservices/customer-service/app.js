@@ -22,8 +22,15 @@ app.get('/customers', (req, res) => {
   res.send(data.customers);
 });
 app.get('/customer/:id', (req, res) => {
-  var prod = data.customerById(req.params.id);
-  res.send(prod);
+  var cus = data.customerById(req.params.id);
+  if(!cus){
+    logger.error("No customer found with ID " + req.params.id)
+    res.status(404).send({status: "No customer found with this ID"});
+  }else{
+    logger.log("Customer found with ID " +req.params.id);
+    res.send(cus);
+  }
+
 });
 
 app.listen(PORT, HOST);

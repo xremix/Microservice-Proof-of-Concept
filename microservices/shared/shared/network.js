@@ -13,7 +13,7 @@ var get = function(port, url, callback, errorFunction) {
   var options = {
     url: 'http://'+ip+':'+port+url+"?token="+auth.currentToken(),
     headers: {
-      'x-correlation-id': correlator.getId()
+      'X-Correlation-id': correlator.getId()
     }
   };
   logger.log("[networkjs] sending request to " + options.url);
@@ -21,6 +21,7 @@ var get = function(port, url, callback, errorFunction) {
     if (!error && response.statusCode == 200) {
       callback && callback(JSON.parse(body));
     }else{
+      logger.error("Error for request " + url + "with status code " + response.statusCode);
       logger.error(error);
       errorFunction && errorFunction(error);
     }

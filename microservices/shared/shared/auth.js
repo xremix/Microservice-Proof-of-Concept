@@ -1,8 +1,9 @@
 const request = require('request');
 const domain = require('domain');
+const httpContext = require('express-cls-hooked');
+const correlator = require('express-correlation-id');
 const env = require('./env');
 const logger = require('./logger');
-const httpContext = require('express-cls-hooked');
 
 var enableAuthenticationMiddleware = true;
 
@@ -27,7 +28,6 @@ var middleware = function(req, res, next){
     next();
     return;
   }
-
 
   httpContext.set('authtoken', req.query.token);
   httpContext.set('currenturl', req.url);
@@ -67,8 +67,11 @@ configure = function(app, disableAuthenticationMiddleware) {
   enableAuthenticationMiddleware = !disableAuthenticationMiddleware;
   app.use(httpContext.middleware);
   app.use(middleware);
-  // app.use((req, res, next) => {
-  //   });
+  // Always return the correlation ID to the client
+  app.use(function(req, res, next){
+    res.set('X-Correlation-id', correlator.getId());
+    next();
+  });
 };
 module.exports.currentToken = currentToken;
 module.exports.currentUrl = currentUrl;
