@@ -22,7 +22,7 @@ app.get('/products', (req, res) => {
   res.send(data.products);
 });
 app.get('/product/:id', (req, res) => {
-  var prod = data.customerById(req.params.id);
+  var prod = data.productById(req.params.id);
   if(!prod){
     logger.error("No product found with ID " + req.params.id)
     res.status(404).send({status: "No product found with this ID"});

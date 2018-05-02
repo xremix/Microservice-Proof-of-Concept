@@ -21,7 +21,7 @@ var get = function(port, url, callback, errorFunction) {
     if (!error && response.statusCode == 200) {
       callback && callback(JSON.parse(body));
     }else{
-      logger.error("Error for request " + url + "with status code " + response.statusCode);
+      logger.error("Error for request " + url + "with status code " + (response && response.statusCode));
       logger.error(error);
       errorFunction && errorFunction(error);
     }
