@@ -2,7 +2,7 @@
 
 const correlator = require('express-correlation-id');
 const express = require('express');
-const data = require('./data');
+const db = require('./db');
 const auth = require('./shared/auth');
 const network = require('./shared/network');
 const logger = require('./shared/logger');
@@ -20,16 +20,16 @@ app.get('/', (req, res) => {
   res.send('Hello transaction\n');
 });
 app.get('/transactions', (req, res) => {
-  res.send(data.getTransactions());
+  res.send(db.getTransactions());
 });
 app.get('/transaction/:id', (req, res) => {
-  var trans = data.transactionById(req.params.id);
+  var trans = db.transactionById(req.params.id);
   network.get("3001", "/customer/"+trans.customerid, function(customers){
     logger.log("/overview recieved customer data");
     network.get("3002", "/product/"+trans.productid, function(products){
       logger.log("/overview recieved product data");
-      var merge = data.mergeTransActionsWithCustomers([trans], [customers]);
-      merge = data.mergeTransActionsWithProducts(merge, [products]);
+      var merge = db.mergeTransActionsWithCustomers([trans], [customers]);
+      merge = db.mergeTransActionsWithProducts(merge, [products]);
       logger.log("Merged Data " + JSON.stringify(merge));
       res.send(merge[0]);
     }, function(){res.status(503).send({status: "external server error"});});
@@ -44,8 +44,8 @@ app.get('/overview', (req, res) => {
     logger.log("/overview recieved customer data");
     network.get("3002", "/products", function(products){
       logger.log("/overview recieved product data");
-      var merge = data.mergeTransActionsWithCustomers(data.getTransactions(), customers);
-      merge = data.mergeTransActionsWithProducts(merge, products);
+      var merge = db.mergeTransActionsWithCustomers(db.getTransactions(), customers);
+      merge = db.mergeTransActionsWithProducts(merge, products);
       res.send(merge);
     }, function(){res.status(503).send({status: "external server error"});});
   }, function(){res.status(503).send({status: "external server error"});});
