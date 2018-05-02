@@ -2,7 +2,7 @@ const correlator = require('express-correlation-id');
 const request = require('request');
 const env = require('./env');
 const logger = require('./logger');
-const auth = require('./auth');
+const middleware = require('./middleware');
 
 var ip = env.get("HOSTIP");
 
@@ -11,7 +11,7 @@ var get = function(port, url, callback, errorFunction) {
   !errorFunction && logger.warn("No Error function defined for " + url);
 
   var options = {
-    url: 'http://'+ip+':'+port+url+"?token="+auth.currentToken(),
+    url: 'http://'+ip+':'+port+url+"?token="+middleware.currentToken(),
     headers: {
       'X-Correlation-id': correlator.getId()
     }

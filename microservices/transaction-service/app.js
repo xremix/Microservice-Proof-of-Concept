@@ -3,7 +3,7 @@
 const correlator = require('express-correlation-id');
 const express = require('express');
 const db = require('./db');
-const auth = require('./shared/auth');
+const middleware = require('./shared/middleware');
 const network = require('./shared/network');
 const logger = require('./shared/logger');
 
@@ -14,7 +14,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.use(correlator());
-auth.configure(app);
+middleware.configure(app);
 
 app.get('/', (req, res) => {
   res.send('Hello transaction\n');

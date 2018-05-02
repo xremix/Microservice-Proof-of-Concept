@@ -2,7 +2,7 @@
 
 const correlator = require('express-correlation-id');
 const express = require('express');
-const auth = require('./shared/auth');
+const middleware = require('./shared/middleware');
 const logger = require('./shared/logger');
 var jwt = require('jsonwebtoken');
 
@@ -15,7 +15,7 @@ const authSecret = 'shhhhh';
 // App
 const app = express();
 app.use(correlator());
-auth.configure(app, true);
+middleware.configure(app, true);
 
 app.get('/', (req, res) => {
     res.send("Hello Auth");

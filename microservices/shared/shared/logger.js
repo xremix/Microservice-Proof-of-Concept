@@ -3,7 +3,7 @@ const correlator = require('express-correlation-id');
 const Logstash = require('logstash-client');
 
 const env = require('./env');
-const auth = require('./auth');
+const middleware = require('./middleware');
 
 
 var logstashPort = 5000;
@@ -48,7 +48,7 @@ var host = env.get("HOSTNAME");
     correlationId: correlator.getId(),
     hostname: host,
     microservice: service,
-    url: auth.currentUrl
+    url: middleware.currentUrl
   }
   if(logLevel == "ERROR"){
     ret.stackTrace = new Error().stack
