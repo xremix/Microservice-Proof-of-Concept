@@ -42,35 +42,26 @@ var middleware = function(req, res, next){
   });
 }
 
-currentToken = function() {
-  return httpContext.get('authtoken');
-};
-
-// TODO refactor, not the best place for this functionality
-currentUrl = function() {
-  return httpContext.get('currenturl');
-};
-
-configure = function(app, disableAuthenticationMiddleware) {
-  enableAuthenticationMiddleware = !disableAuthenticationMiddleware;
-  app.use(httpContext.middleware);
-  app.use(middleware);
-  // Always return the correlation ID to the client
-  app.use(function(req, res, next){
-    res.set('X-Correlation-id', correlator.getId());
-    next();
-  });
-};
-
-
-errorMiddleware = function(err, req, res, next) {
-  logger.error(err.toString());
-  next(err);
-}
 
 var exports = module.exports = {
-  currentToken: currentToken,
-  currentUrl: currentUrl,
-  configure: configure,
-  errorMiddleware: errorMiddleware
+  currentToken: function() {
+    return httpContext.get('authtoken');
+  },
+  currentUrl: function() {
+    return httpContext.get('currenturl');
+  },
+  configure: function(app, disableAuthenticationMiddleware) {
+    enableAuthenticationMiddleware = !disableAuthenticationMiddleware;
+    app.use(httpContext.middleware);
+    app.use(middleware);
+    // Always return the correlation ID to the client
+    app.use(function(req, res, next){
+      res.set('X-Correlation-id', correlator.getId());
+      next();
+    });
+  },
+  errorMiddleware: function(err, req, res, next) {
+    logger.error(err.toString());
+    next(err);
+  }
 }
