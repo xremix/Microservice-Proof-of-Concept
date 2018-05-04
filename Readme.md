@@ -13,6 +13,13 @@ To start the ELK Stack as well run
 `./run.sh elk`
 
 
+To stop ELK again run
+```
+docker stop elk_kibana_1
+docker stop elk_logstash_1
+docker stop elk_elasticsearch_1
+````
+
 ## ELK-Stack
 
 ### Start

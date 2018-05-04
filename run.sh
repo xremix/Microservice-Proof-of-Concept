@@ -9,15 +9,11 @@ cp -R ./shared/ ./customer-service/
 cp -R ./shared/ ./product-service/
 cp -R ./shared/ ./transaction-service/
 
-docker-compose build
-
 if [ "$1" == "elk" ]
   then
-    echo "Starting Microservices and ELK"
-    docker-compose up &
-    cd ./elk
-    docker-compose up
-  else
-    echo "Starting Microservices"
-    docker-compose up
+    cd ../elk
+    docker-compose up -d $2
+    cd ../microservices
 fi
+
+docker-compose up --build
