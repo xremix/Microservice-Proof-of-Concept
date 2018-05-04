@@ -7,7 +7,7 @@ microservices/product-service/package.json
 microservices/transaction-service/shared/*
 microservices/transaction-service/package.json
 
-
+elk/elasticsearch/data
 
 # Logs
 logs
