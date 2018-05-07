@@ -24,6 +24,7 @@ app.get('/transactions', (req, res) => {
 });
 app.get('/transaction/:id', (req, res) => {
   var trans = db.transactionById(req.params.id);
+
   network.get("3001", "/customer/"+trans.customerid, function(customers){
     logger.log("/transaction recieved customer data");
     network.get("3002", "/product/"+trans.productid, function(products){

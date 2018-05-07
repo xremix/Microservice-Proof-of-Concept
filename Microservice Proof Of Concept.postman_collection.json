@@ -194,11 +194,15 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2dccc39b-b400-442c-8574-c9ab51f71d65",
+								"id": "115d81aa-e3a5-4831-9aa2-536f5e61d9ad",
 								"type": "text/javascript",
 								"exec": [
 									"pm.environment.set(\"token\", pm.response.text());",
-									""
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
 								]
 							}
 						}
@@ -228,15 +232,41 @@
 					"response": []
 				},
 				{
+					"name": "Check Auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/checkauth/?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checkauth",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Auth wrong user",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "2dccc39b-b400-442c-8574-c9ab51f71d65",
+								"id": "557fb408-9272-4262-8469-4135fb473eed",
 								"type": "text/javascript",
 								"exec": [
-									"pm.environment.set(\"token\", pm.response.text());",
 									""
 								]
 							}
@@ -260,33 +290,6 @@
 								{
 									"key": "user",
 									"value": "peter"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Check Auth",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:3000/checkauth/?token={{token}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"checkauth",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token}}"
 								}
 							]
 						}
@@ -402,6 +405,48 @@
 					"response": []
 				},
 				{
+					"name": "Transactions 100 - Force Bug",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d115167-b397-4afd-9585-9b57a448a74f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3003/transaction/100/?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3003",
+							"path": [
+								"transaction",
+								"100",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Transactions Overview",
 					"request": {
 						"method": "GET",
@@ -429,6 +474,37 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "846756ee-9ee7-4bc1-b4c6-f5dd0bb8ee41",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "fd8cff04-9f45-4a22-a01a-ddb05b2cca57",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "60adf03f-89c8-4819-bebd-9b0e2ec5b0f5",
+			"key": "token",
+			"value": "df6bd192-a5f5-4250-817c-24a682d9143a",
+			"type": "string",
+			"description": ""
 		}
 	]
 }

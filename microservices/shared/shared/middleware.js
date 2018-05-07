@@ -4,21 +4,20 @@ const httpContext = require('express-cls-hooked');
 const correlator = require('express-correlation-id');
 const env = require('./env');
 const logger = require('./logger');
-const auth = require('./auth');
+const auth = require('./authentication');
 
 var enableAuthenticationMiddleware = true;
 
-
-var middleware = function(req, res, next){
+/** Checks authentication */
+var authMiddleware = function(req, res, next){
   logger.log("Incomming request for " + req.url);
   if(req.url == "/"){
     logger.log("Request for /, ignoring authentication middleware");
     next();
     return;
   }
-
+  // Set authentication to current http context
   httpContext.set('authtoken', req.query.token);
-  httpContext.set('currenturl', req.url);
   httpContext.set('authenticated', false);
 
   if(!enableAuthenticationMiddleware){
@@ -40,24 +39,35 @@ var middleware = function(req, res, next){
       return;
     }
   });
-}
+};
 
+/** Always return the correlation ID to the client */
+var correlationReturnMiddleware = function(req, res, next){
+  res.set('X-Correlation-id', correlator.getId());
+  next();
+};
+
+/** Setting variables that can be reused in other modules without having access to the req */
+var sessionVarMiddleware = function(req, res, next){
+  // Mostly used in logger.js
+  httpContext.set('currenturl', req.url);
+  next();
+};
 
 module.exports.currentToken =  function() {
   return httpContext.get('authtoken');
 };
-module.exports.currentUrl =  function() {
-  return httpContext.get('currenturl');
+
+module.exports.sessionVars =  function(q) {
+  return httpContext.get(q);
 };
+
 module.exports.configure =  function(app, disableAuthenticationMiddleware) {
   enableAuthenticationMiddleware = !disableAuthenticationMiddleware;
   app.use(httpContext.middleware);
-  app.use(middleware);
-  // Always return the correlation ID to the client
-  app.use(function(req, res, next){
-    res.set('X-Correlation-id', correlator.getId());
-    next();
-  });
+  app.use(authMiddleware);
+  app.use(sessionVarMiddleware);
+  app.use(correlationReturnMiddleware);
 };
 module.exports.errorMiddleware = function(err, req, res, next) {
   logger.error(err.toString());

@@ -17,5 +17,4 @@ var validateToken = function(callback) {
     }
   });
 };
-
 module.exports.validateToken = validateToken;
