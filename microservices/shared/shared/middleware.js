@@ -50,7 +50,17 @@ var correlationReturnMiddleware = function(req, res, next){
 /** Setting variables that can be reused in other modules without having access to the req */
 var sessionVarMiddleware = function(req, res, next){
   // Mostly used in logger.js
+
+  var remoteIP = (req.headers['x-forwarded-for'] ||
+     req.connection.remoteAddress ||
+     req.socket.remoteAddress ||
+     req.connection.socket.remoteAddress).split(",")[0];
+
+  httpContext.set('remoteip', remoteIP);
+
   httpContext.set('currenturl', req.url);
+  httpContext.set('useragent', req.headers['user-agent']);
+
   next();
 };
 

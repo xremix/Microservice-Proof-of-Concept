@@ -39,7 +39,9 @@ function createLogObject(logLevel, message){
     correlationId: correlator.getId(),
     hostname: host,
     microservice: service,
-    url: middleware.sessionVars('currenturl')
+    url: middleware.sessionVars('currenturl'),
+    useragent: middleware.sessionVars('useragent'),
+    remoteip: middleware.sessionVars('remoteip')
   }
   if(logLevel == "ERROR"){
     ret.stackTrace = new Error().stack

@@ -22,12 +22,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  logger.log("Client authenticated. Generating GUID");
-  if(req.query.user == "admin"){
-    var token = jwt.sign({ username: 'johndoe' }, authSecret);
+  if(req.query.user && (["admin", "peter", "toni"].indexOf(req.query.user.toLowerCase() != -1))){
+    logger.log("Client authenticated. Generating JWT");
+    var token = jwt.sign({ username: req.query.user }, authSecret);
     res.send(token);
   }else{
-    logger.error("unknown user");
+    logger.error("unknown user " + req.query.user + " tried to authenticate");
     res.status(401).send({status: "unknown user"});
   }
 });
