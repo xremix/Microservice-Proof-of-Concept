@@ -20,6 +20,25 @@ docker stop elk_logstash_1
 docker stop elk_elasticsearch_1
 ````
 
+### Explenation
+
+#### Structure
+
+- `./shared` Is a folder that will be copied to each of the underlying microservices. This is a hacky way to not have to build NPM modules for now
+- `./*-service` This are the folders of the microservices. Each Service has an `app.js` with the actuall server and a `data.json` with a read-only database.
+
+
+#### Data
+Right now all the services use the same `db.js` module, that allows to provide (and log) data access to the `data.json`.
+
+#### Middlewares
+The services contain the following middleware functionalities:
+
+- `authMiddleware` to provide Authentication functionalities and auto `HTTP-401` responses
+- `correlationReturnMiddleware` that returns the generated `Correlation-ID` back to the client
+- `sessionVarMiddleware` that stores request variables for the current session. This is mostly used for logging
+- `cacheMiddleware` to provide `E-Tag` Client-Caching functionality
+
 ## ELK-Stack
 
 ### Start
