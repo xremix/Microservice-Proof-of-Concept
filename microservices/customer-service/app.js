@@ -2,7 +2,7 @@
 
 const correlator = require('express-correlation-id');
 const express = require('express');
-const data = require('./db');
+const customers = require('./db');
 const middleware = require('./shared/middleware');
 const logger = require('./shared/logger');
 
@@ -19,10 +19,10 @@ app.get('/', (req, res) => {
     res.send('Hello customer\n');
 });
 app.get('/customers', (req, res) => {
-  res.send(data.customers);
+  res.send(customers.getAll());
 });
 app.get('/customer/:id', (req, res) => {
-  var cus = data.customerById(req.params.id);
+  var cus = customers.getById(req.params.id);
   if(!cus){
     logger.error("No customer found with ID " + req.params.id)
     res.status(404).send({status: "No customer found with this ID"});
