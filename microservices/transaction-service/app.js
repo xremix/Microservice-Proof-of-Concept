@@ -2,7 +2,7 @@
 
 const correlator = require('express-correlation-id');
 const express = require('express');
-const db = require('./db-ext');
+const transactions = require('./db-ext');
 const middleware = require('./shared/middleware');
 const network = require('./shared/network');
 const logger = require('./shared/logger');
@@ -15,23 +15,23 @@ const HOST = '0.0.0.0';
 const app = express();
 app.use(correlator());
 middleware.configure(app);
-app.use(db.cacheMiddleware);
+app.use(transactions.cacheMiddleware);
 
 app.get('/', (req, res) => {
   res.send('Hello transaction\n');
 });
 app.get('/transactions', (req, res) => {
-  res.send(db.getTransactions());
+  res.send(transactions.getAll());
 });
 app.get('/transaction/:id', (req, res) => {
-  var trans = db.transactionById(req.params.id);
+  var trans = transactions.getById(req.params.id);
 
   network.get("3001", "/customer/"+trans.customerid, function(customers){
     logger.log("/transaction recieved customer data");
     network.get("3002", "/product/"+trans.productid, function(products){
       logger.log("/transaction recieved product data");
-      var merge = db.mergeTransActionsWithCustomers([trans], [customers]);
-      merge = db.mergeTransActionsWithProducts(merge, [products]);
+      var merge = transactions.mergeTransActionsWithCustomers([trans], [customers]);
+      merge = transactions.mergeTransActionsWithProducts(merge, [products]);
       logger.log("Merged Data " + JSON.stringify(merge));
       res.send(merge[0]);
     }, function(){res.status(503).send({status: "external server error"});});
@@ -46,8 +46,8 @@ app.get('/overview', (req, res) => {
     logger.log("/overview recieved customer data");
     network.get("3002", "/products", function(products){
       logger.log("/overview recieved product data");
-      var merge = db.mergeTransActionsWithCustomers(db.getTransactions(), customers);
-      merge = db.mergeTransActionsWithProducts(merge, products);
+      var merge = transactions.mergeTransActionsWithCustomers(transactions.getAll(), customers);
+      merge = transactions.mergeTransActionsWithProducts(merge, products);
       res.send(merge);
     }, function(){res.status(503).send({status: "external server error"});});
   }, function(){res.status(503).send({status: "external server error"});});
