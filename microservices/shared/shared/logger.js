@@ -42,7 +42,7 @@ function createLogObject(logLevel, message, stack){
     url: middleware.sessionVars('currenturl'),
     useragent: middleware.sessionVars('useragent'),
     remoteip: middleware.sessionVars('remoteip'),
-    logDate: new Date()
+    logDate: new Date() // to handle logstash request times
   }
   if(stack){
     ret.stackTrace = stack
