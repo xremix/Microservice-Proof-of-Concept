@@ -20,7 +20,7 @@ docker stop elk_logstash_1
 docker stop elk_elasticsearch_1
 ````
 
-### Explenation
+### Explantation
 
 #### Structure
 
