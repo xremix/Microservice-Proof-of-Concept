@@ -41,7 +41,8 @@ function createLogObject(logLevel, message, stack){
     microservice: service,
     url: middleware.sessionVars('currenturl'),
     useragent: middleware.sessionVars('useragent'),
-    remoteip: middleware.sessionVars('remoteip')
+    remoteip: middleware.sessionVars('remoteip'),
+    logDate: new Date()
   }
   if(stack){
     ret.stackTrace = stack
