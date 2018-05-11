@@ -20,7 +20,36 @@ docker stop elk_logstash_1
 docker stop elk_elasticsearch_1
 ````
 
-### Explanation
+### Routes
+To check all the existing routes, etc. make sure to check the [Postman](https://www.getpostman.com/) demo file.
+
+# Auth-Service
+```
+http://localhost:3000/
+http://localhost:3000/auth?user={{username}}
+http://localhost:3000/checkauth/?token={{token}}
+```
+# Customer-Service
+```
+http://localhost:3001
+http://localhost:3001/customers/?token={{token}}
+http://localhost:3001/customer/{{id}}/?token={{token}}
+```
+# Product-Service
+```
+http://localhost:3002/
+http://localhost:3002/products/?token={{token}}
+http://localhost:3002/product/{{id}}/?token={{token}}
+```
+# Transaction-Service
+```
+http://localhost:3003/
+http://localhost:3003/transactions/?token={{token}}
+http://localhost:3003/transaction/{{id}}/?token={{token}}
+http://localhost:3003/overview/?token={{token}}
+```
+
+### Documentation
 
 #### Structure
 
