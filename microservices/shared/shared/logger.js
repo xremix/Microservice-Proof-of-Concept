@@ -30,7 +30,7 @@ function logToLogstash(logObject){
 }
 
 /** creates the default logging object */
-function createLogObject(logLevel, message){
+function createLogObject(logLevel, message, stack){
   var service = env.get("SERVICENAME");
   var host = env.get("HOSTNAME");
   var ret = {
@@ -43,23 +43,25 @@ function createLogObject(logLevel, message){
     useragent: middleware.sessionVars('useragent'),
     remoteip: middleware.sessionVars('remoteip')
   }
-  if(logLevel == "ERROR"){
-    ret.stackTrace = new Error().stack
+  if(stack){
+    ret.stackTrace = stack
   }
   return ret;
 }
 
 /** Loggs an error to various outputs */
-module.exports.error  = function(message){
-  logMessage(createLogObject("ERROR", message, true))
+module.exports.error  = function(message, stack){
+  // Using the stack parameter, or getting the stack from this function
+  stack = stack || new Error().stack;
+  logMessage(createLogObject("ERROR", message, stack))
 };
 
 /** Loggs an warning to various outputs */
 module.exports.warn  = function(message){
-  logMessage(createLogObject("WARNING", message))
+  logMessage(createLogObject("WARNING", message, undefined))
 };
 
 /** Loggs an info to various outputs */
 module.exports.log  = function(message){
-  logMessage(createLogObject("INFO", message))
+  logMessage(createLogObject("INFO", message, undefined))
 };

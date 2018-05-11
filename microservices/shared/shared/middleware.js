@@ -80,6 +80,6 @@ module.exports.configure =  function(app, disableAuthenticationMiddleware) {
   app.use(correlationReturnMiddleware);
 };
 module.exports.errorMiddleware = function(err, req, res, next) {
-  logger.error(err.toString());
+  logger.error(err.toString(), err.stack);
   next(err);
 };

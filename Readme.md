@@ -20,11 +20,11 @@ docker stop elk_logstash_1
 docker stop elk_elasticsearch_1
 ````
 
-### Explantation
+### Explanation
 
 #### Structure
 
-- `./shared` Is a folder that will be copied to each of the underlying microservices. This is a hacky way to not have to build NPM modules for now
+- `./shared` Is a folder that will be copied to each of the underlying microservices. This is a hacky way to not have to build NPM modules for now.
 - `./*-service` This are the folders of the microservices. Each Service has an `app.js` with the actuall server and a `data.json` with a read-only database.
 
 
@@ -38,11 +38,12 @@ The services contain the following middleware functionalities:
 - `correlationReturnMiddleware` that returns the generated `Correlation-ID` back to the client
 - `sessionVarMiddleware` that stores request variables for the current session. This is mostly used for logging
 - `cacheMiddleware` to provide `E-Tag` Client-Caching functionality
+- `errorMiddleware` to catch all errors, log them and return to the client
 
 ## ELK-Stack
 
 ### Start
-Start the ELK-Stack `docker-compose up`
+To only start the ELK-Stack run `docker-compose up` in `./elk/`
 
 Go to Kibana web UI via http://localhost:5601
 

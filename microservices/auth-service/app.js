@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  if(req.query.user && (["admin", "peter", "toni"].indexOf(req.query.user.toLowerCase() != -1))){
+  if(req.query.user && (["admin", "peter", "toni"].indexOf(req.query.user.toLowerCase()) != -1)){
     logger.log("Client authenticated. Generating JWT");
     var token = jwt.sign({ username: req.query.user }, authSecret);
     res.send(token);
