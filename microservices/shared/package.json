@@ -12,6 +12,7 @@
     "logstash-client": "1.1.1",
     "express-correlation-id": "1.2.0",
     "express-cls-hooked": "0.3.8",
-    "jsonwebtoken": "*"
+    "jsonwebtoken": "*",
+    "md5": "*"
   }
 }

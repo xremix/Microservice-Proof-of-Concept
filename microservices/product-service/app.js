@@ -14,6 +14,7 @@ const HOST = '0.0.0.0';
 const app = express();
 app.use(correlator());
 middleware.configure(app);
+app.use(db.cacheMiddleware);
 
 app.get('/', (req, res) => {
   res.send('Hello product\n');

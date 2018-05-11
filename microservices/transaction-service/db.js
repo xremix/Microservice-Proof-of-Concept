@@ -30,5 +30,18 @@ var exports = module.exports = {
       if(item.product != null){delete item.productid;}
       return item;
     })
+  },
+  cacheMiddleware: function(req, res, next){
+    var md5 = require('md5');
+    var etag = md5(module.exports.getTransactions());
+    var ifNoneMatch = req.get('If-None-Match');
+
+    if(etag == ifNoneMatch){
+      res.status(304).send();
+      return;
+    }else{
+      res.set('ETag', etag);
+      next();
+    }
   }
 };
