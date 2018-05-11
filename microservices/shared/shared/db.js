@@ -5,6 +5,7 @@ const data = require('../data');
 
 module.exports = {
   getAll: function(){
+    logger.log("loading all data from database");
     return JSON.parse(JSON.stringify(data));
   },
   getById: function(id) {
@@ -14,6 +15,7 @@ module.exports = {
   },
   cacheMiddleware: function(req, res, next){
     var md5 = require('md5');
+    logger.log("Caching Middleware generating ETag");
     var etag = md5(module.exports.getAll());
     var ifNoneMatch = req.get('If-None-Match');
 
