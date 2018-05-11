@@ -1,11 +1,15 @@
 microservices/auth-service/shared/*
 microservices/auth-service/package.json
+microservices/auth-service/Dockerfile
 microservices/customer-service/shared/*
 microservices/customer-service/package.json
+microservices/customer-service/Dockerfile
 microservices/product-service/shared/*
 microservices/product-service/package.json
+microservices/product-service/Dockerfile
 microservices/transaction-service/shared/*
 microservices/transaction-service/package.json
+microservices/transaction-service/Dockerfile
 
 elk/elasticsearch/data
 
