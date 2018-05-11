@@ -135,6 +135,52 @@
 					"response": []
 				},
 				{
+					"name": "Products Etag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b821f9c-0265-447f-8397-92aee0ae8284",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 304\", function () {",
+									"    pm.response.to.have.status(304);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "If-None-Match",
+								"value": "693e9af84d3dfcc71e640e005bdc5e2e"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3002/products/?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Products 1",
 					"request": {
 						"method": "GET",
@@ -264,10 +310,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "557fb408-9272-4262-8469-4135fb473eed",
+								"id": "4b2d54f7-3ee7-4461-bca0-7109fd9161d7",
 								"type": "text/javascript",
 								"exec": [
-									""
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
 								]
 							}
 						}
@@ -277,7 +325,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:3000/auth?user=peter",
+							"raw": "http://localhost:3000/auth?user=MeTheHacker",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -289,7 +337,7 @@
 							"query": [
 								{
 									"key": "user",
-									"value": "peter"
+									"value": "MeTheHacker"
 								}
 							]
 						}
@@ -410,10 +458,10 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2d115167-b397-4afd-9585-9b57a448a74f",
+								"id": "fcc60d92-0f88-4d1b-8fc2-f23a946430aa",
 								"type": "text/javascript",
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
+									"pm.test(\"Status code is 404\", function () {",
 									"    pm.response.to.have.status(404);",
 									"});"
 								]
@@ -500,7 +548,7 @@
 	],
 	"variable": [
 		{
-			"id": "60adf03f-89c8-4819-bebd-9b0e2ec5b0f5",
+			"id": "084ebf37-edd7-49bf-a453-92b3e90f8b92",
 			"key": "token",
 			"value": "df6bd192-a5f5-4250-817c-24a682d9143a",
 			"type": "string",
