@@ -6,12 +6,13 @@ const middleware = require('./middleware');
 
 var ip = env.get("HOSTIP");
 
+/** makes a get request to a specific microservices (based on port) */
 var get = function(port, url, callback, errorFunction) {
   !callback && logger.warn("No Callback function defined for " + url);
   !errorFunction && logger.warn("No Error function defined for " + url);
 
   var options = {
-    url: 'http://'+ip+':'+port+url+"?token="+middleware.currentToken(),
+    url: 'http://'+ip+':'+port+url+"?token="+middleware.currentAuthToken(),
     headers: {
       'X-Correlation-id': correlator.getId()
     }

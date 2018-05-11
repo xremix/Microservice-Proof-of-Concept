@@ -4,12 +4,12 @@ const middleware = require('./middleware');
 const env = require('./env');
 const logger = require('./logger');
 
+/** Validates the token from the middleware parameters against the auth service*/
 var validateToken = function(callback) {
   console.log(middleware);
 
-
   var options = {
-    url: 'http://'+env.get("HOSTIP")+':3000/checkauth?token=' + middleware.currentToken(),
+    url: 'http://'+env.get("HOSTIP")+':3000/checkauth?token=' + middleware.currentAuthToken(),
     headers: {
       'X-Correlation-id': correlator.getId()
     }

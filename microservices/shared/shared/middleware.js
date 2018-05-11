@@ -64,14 +64,17 @@ var sessionVarMiddleware = function(req, res, next){
   next();
 };
 
-module.exports.currentToken =  function() {
+/** returns the current authtoken */
+module.exports.currentAuthToken =  function() {
   return httpContext.get('authtoken');
 };
 
+/** returns an value from the http context variables*/
 module.exports.sessionVars =  function(q) {
   return httpContext.get(q);
 };
 
+/** sets up all default middlewares */
 module.exports.configure =  function(app, disableAuthenticationMiddleware) {
   enableAuthenticationMiddleware = !disableAuthenticationMiddleware;
   app.use(httpContext.middleware);
