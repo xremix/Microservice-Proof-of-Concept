@@ -1,6 +1,6 @@
 const _ = require('lodash');
-const logger = require('./shared/logger');
-const data = require('./data');
+const logger = require('./logger');
+const data = require('../data');
 
 
 module.exports = {

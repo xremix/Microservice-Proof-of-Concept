@@ -2,7 +2,7 @@
 
 const correlator = require('express-correlation-id');
 const express = require('express');
-const products = require('./db');
+const products = require('./shared/db');
 const middleware = require('./shared/middleware');
 const logger = require('./shared/logger');
 
