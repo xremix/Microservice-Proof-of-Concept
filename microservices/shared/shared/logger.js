@@ -31,14 +31,12 @@ function logToLogstash(logObject){
 
 /** creates the default logging object */
 function createLogObject(logLevel, message, stack){
-  var service = env.get("SERVICENAME");
-  var host = env.get("HOSTNAME");
   var ret = {
     logLevel: logLevel,
     message: message,
     correlationId: correlator.getId(),
-    hostname: host,
-    microservice: service,
+    hostname: env.get("HOSTNAME"),
+    microservice: env.get("SERVICENAME"),
     url: middleware.sessionVars('currenturl'),
     useragent: middleware.sessionVars('useragent'),
     remoteip: middleware.sessionVars('remoteip'),
