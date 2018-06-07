@@ -5,7 +5,7 @@ const env = require('./env');
 const middleware = require('./middleware');
 
 var logstashPort = 5000;
-var logstashServer = env.get("HOSTIP");
+var logstashServer = env.get('HOSTIP');
 
 /** Loggs a message to various outputs */
 function logMessage(logObject){
@@ -35,8 +35,8 @@ function createLogObject(logLevel, message, stack){
     logLevel: logLevel,
     message: message,
     correlationId: correlator.getId(),
-    hostname: env.get("HOSTNAME"),
-    microservice: env.get("SERVICENAME"),
+    hostname: env.get('HOSTNAME'),
+    microservice: env.get('SERVICENAME'),
     url: middleware.sessionVars('currenturl'),
     useragent: middleware.sessionVars('useragent'),
     remoteip: middleware.sessionVars('remoteip'),
@@ -52,15 +52,15 @@ function createLogObject(logLevel, message, stack){
 module.exports.error  = function(message, stack){
   // Using the stack parameter, or getting the stack from this function
   stack = stack || new Error().stack;
-  logMessage(createLogObject("ERROR", message, stack))
+  logMessage(createLogObject('ERROR', message, stack))
 };
 
 /** Loggs an warning to various outputs */
 module.exports.warn  = function(message){
-  logMessage(createLogObject("WARNING", message, undefined))
+  logMessage(createLogObject('WARNING', message, undefined))
 };
 
 /** Loggs an info to various outputs */
 module.exports.log  = function(message){
-  logMessage(createLogObject("INFO", message, undefined))
+  logMessage(createLogObject('INFO', message, undefined))
 };

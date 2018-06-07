@@ -24,10 +24,10 @@ app.get('/customers', (req, res) => {
 app.get('/customer/:id', (req, res) => {
   var cus = customers.getById(req.params.id);
   if(!cus){
-    logger.error("No customer found with ID " + req.params.id)
-    res.status(404).send({status: "No customer found with this ID"});
+    logger.error('No customer found with ID ' + req.params.id)
+    res.status(404).send({status: 'No customer found with this ID'});
   }else{
-    logger.log("Customer found with ID " +req.params.id);
+    logger.log('Customer found with ID ' +req.params.id);
     res.send(cus);
   }
 });

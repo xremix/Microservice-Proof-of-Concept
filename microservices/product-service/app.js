@@ -25,10 +25,10 @@ app.get('/products', (req, res) => {
 app.get('/product/:id', (req, res) => {
   var prod = products.getById(req.params.id);
   if(!prod){
-    logger.error("No product found with ID " + req.params.id)
-    res.status(404).send({status: "No product found with this ID"});
+    logger.error('No product found with ID ' + req.params.id)
+    res.status(404).send({status: 'No product found with this ID'});
   }else{
-    logger.log("Product found with ID " +req.params.id);
+    logger.log('Product found with ID ' +req.params.id);
     res.send(prod);
   }
 });

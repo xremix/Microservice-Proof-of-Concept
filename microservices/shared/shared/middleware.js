@@ -10,9 +10,9 @@ var enableAuthenticationMiddleware = true;
 
 /** Checks authentication */
 var authMiddleware = function(req, res, next){
-  logger.log("Incomming request for " + req.url);
-  if(req.url == "/"){
-    logger.log("Request for /, ignoring authentication middleware");
+  logger.log('Incomming request for ' + req.url);
+  if(req.url == '/'){
+    logger.log('Request for /, ignoring authentication middleware');
     next();
     return;
   }
@@ -21,13 +21,13 @@ var authMiddleware = function(req, res, next){
   httpContext.set('authenticated', false);
 
   if(!enableAuthenticationMiddleware){
-    logger.log("Authentication Middleware disabled");
+    logger.log('Authentication Middleware disabled');
     next();
     return;
   }
   if(!req.query.token){
-    logger.error("No Token provided");
-    res.status(401).send({status: "No Token provided"});
+    logger.error('No Token provided');
+    res.status(401).send({status: 'No Token provided'});
     return;
   }
   auth.validateToken(function(authorized){
@@ -35,7 +35,7 @@ var authMiddleware = function(req, res, next){
       httpContext.set('authenticated', true);
       next();
     }else{
-      res.status(401).send({status: "Invalid Token"});
+      res.status(401).send({status: 'Invalid Token'});
       return;
     }
   });
@@ -54,7 +54,7 @@ var sessionVarMiddleware = function(req, res, next){
   var remoteIP = (req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
      req.socket.remoteAddress ||
-     req.connection.socket.remoteAddress).split(",")[0];
+     req.connection.socket.remoteAddress).split(',')[0];
 
   httpContext.set('remoteip', remoteIP);
 
