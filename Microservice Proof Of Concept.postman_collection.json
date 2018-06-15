@@ -6,6 +6,169 @@
 	},
 	"item": [
 		{
+			"name": "Auth",
+			"description": "",
+			"item": [
+				{
+					"name": "Auth Up",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "115d81aa-e3a5-4831-9aa2-536f5e61d9ad",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.text());",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/auth?user=admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth"
+							],
+							"query": [
+								{
+									"key": "user",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/checkauth/?token={{token}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checkauth",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth wrong user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b2d54f7-3ee7-4461-bca0-7109fd9161d7",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/auth?user=MeTheHacker",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth"
+							],
+							"query": [
+								{
+									"key": "user",
+									"value": "MeTheHacker"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Wrong Auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/checkauth/?token=df6bd192-a5f5-4250-817c-24a682d9143x",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"checkauth",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "df6bd192-a5f5-4250-817c-24a682d9143x"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Customer",
 			"description": "",
 			"item": [
@@ -211,169 +374,6 @@
 			]
 		},
 		{
-			"name": "Auth",
-			"description": "",
-			"item": [
-				{
-					"name": "Auth Up",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:3000/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Auth",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "115d81aa-e3a5-4831-9aa2-536f5e61d9ad",
-								"type": "text/javascript",
-								"exec": [
-									"pm.environment.set(\"token\", pm.response.text());",
-									"",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:3000/auth?user=admin",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"auth"
-							],
-							"query": [
-								{
-									"key": "user",
-									"value": "admin"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Check Auth",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:3000/checkauth/?token={{token}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"checkauth",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Auth wrong user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "4b2d54f7-3ee7-4461-bca0-7109fd9161d7",
-								"type": "text/javascript",
-								"exec": [
-									"pm.test(\"Status code is 401\", function () {",
-									"    pm.response.to.have.status(401);",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:3000/auth?user=MeTheHacker",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"auth"
-							],
-							"query": [
-								{
-									"key": "user",
-									"value": "MeTheHacker"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Check Wrong Auth",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:3000/checkauth/?token=df6bd192-a5f5-4250-817c-24a682d9143x",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"checkauth",
-								""
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "df6bd192-a5f5-4250-817c-24a682d9143x"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Transaction",
 			"description": "",
 			"item": [
@@ -425,7 +425,7 @@
 					"response": []
 				},
 				{
-					"name": "Transactions 1",
+					"name": "Transaction 1",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -453,7 +453,7 @@
 					"response": []
 				},
 				{
-					"name": "Transactions 100 - Force Bug",
+					"name": "Transaction 100 - Force Failure",
 					"event": [
 						{
 							"listen": "test",
@@ -492,7 +492,91 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"id": "2133347b-c343-4983-994d-697132de8a20",
+							"name": "Transactions 100 - Force Failure",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://localhost:3003/transaction/100/?token={{token}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3003",
+									"path": [
+										"transaction",
+										"100",
+										""
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Connection",
+									"value": "keep-alive",
+									"name": "Connection",
+									"description": "Options that are desired for the connection"
+								},
+								{
+									"key": "Content-Length",
+									"value": "993",
+									"name": "Content-Length",
+									"description": "The length of the response body in octets (8-bit bytes)"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8",
+									"name": "Content-Type",
+									"description": "The mime type of this content"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 20 May 2018 12:09:37 GMT",
+									"name": "Date",
+									"description": "The date and time that the message was sent"
+								},
+								{
+									"key": "ETag",
+									"value": "f1d3ff8443297732862df21dc4e57262",
+									"name": "ETag",
+									"description": "An identifier for a specific version of a resource, often a message digest"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff",
+									"name": "X-Content-Type-Options",
+									"description": "The only defined value, \"nosniff\", prevents Internet Explorer from MIME-sniffing a response away from the declared content-type"
+								},
+								{
+									"key": "X-Correlation-id",
+									"value": "170d8825-f4dc-4ffa-909d-17c007552896",
+									"name": "X-Correlation-id",
+									"description": "Custom header"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express",
+									"name": "X-Powered-By",
+									"description": "Specifies the technology (ASP.NET, PHP, JBoss, e.g.) supporting the web application (version details are often in X-Runtime, X-Version, or X-AspNet-Version)"
+								}
+							],
+							"cookie": [],
+							"body": "TypeError: Cannot read property &#39;customerid&#39; of undefined<br> &nbsp; &nbsp;at app.get (/usr/src/app/app.js:29:42)<br> &nbsp; &nbsp;at Layer.handle [as handle_request] (/usr/src/app/node_modules/express/lib/router/layer.js:82:5)<br> &nbsp; &nbsp;at next (/usr/src/app/node_modules/express/lib/router/route.js:110:13)<br> &nbsp; &nbsp;at Route.dispatch (/usr/src/app/node_modules/express/lib/router/route.js:91:3)<br> &nbsp; &nbsp;at Layer.handle [as handle_request] (/usr/src/app/node_modules/express/lib/router/layer.js:82:5)<br> &nbsp; &nbsp;at /usr/src/app/node_modules/express/lib/router/index.js:267:22<br> &nbsp; &nbsp;at param (/usr/src/app/node_modules/express/lib/router/index.js:340:14)<br> &nbsp; &nbsp;at param (/usr/src/app/node_modules/express/lib/router/index.js:356:14)<br> &nbsp; &nbsp;at Function.proto.process_params (/usr/src/app/node_modules/express/lib/router/index.js:400:3)<br> &nbsp; &nbsp;at next (/usr/src/app/node_modules/express/lib/router/index.js:261:10)\n"
+						}
+					]
 				},
 				{
 					"name": "Transactions Overview",
@@ -548,7 +632,7 @@
 	],
 	"variable": [
 		{
-			"id": "084ebf37-edd7-49bf-a453-92b3e90f8b92",
+			"id": "1b64db50-6c18-4d74-85fb-2a2d0b42ccaa",
 			"key": "token",
 			"value": "df6bd192-a5f5-4250-817c-24a682d9143a",
 			"type": "string",
